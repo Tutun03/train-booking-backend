@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bookingRoutes = require('./routes/bookingRoutes');
+const http = require("http");
 const { Server }= require("socket.io");
 const app = express();
 const server= http.createServer(app);
