@@ -1,11 +1,15 @@
 const express= require('express');
-const router=express.Router();
+
 const Booking= require('../models/booking.js');
+module.exports =function(io) {
+  const router= express.Router();
+
 router.post('/book',async(req,res)=>{
     console.log("Incoming booking data:", req.body);
     try{
         const booking =new Booking(req.body);
         await booking.save();
+        io.emit("newBooking",booking); // <-- Emit to all connected clients
         res.status(201).json({message: 'Booking saved successfully'});
 
     }
@@ -25,4 +29,5 @@ router.get('/bookings', async (req, res) => {
   }
 });
 
-module.exports=router;
+return router;
+};
